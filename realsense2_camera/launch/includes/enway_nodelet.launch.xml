@@ -38,7 +38,12 @@
   <arg name="gyro_fps"            default="1000"/>
   <arg name="accel_fps"           default="1000"/>
   <arg name="enable_imu"          default="true"/>
+
   <arg name="base_frame_id"       default="camera_link"/>
+  <arg name="camera_color_frame"  default="camera_color_frame"/>
+  <arg name="camera_infra1_frame" default="camera_infra1_frame"/>
+  <arg name="camera_infra2_frame" default="camera_infra2_frame"/>
+  <arg name="camera_depth_frame"  default="camera_depth_frame"/>
 
   <arg name="enable_pointcloud"   default="false"/>
   <arg name="enable_sync"         default="false"/>
@@ -81,7 +86,12 @@
     <param name="gyro_fps"                 type="int"  value="$(arg gyro_fps)"/>
     <param name="accel_fps"                type="int"  value="$(arg accel_fps)"/>
     <param name="enable_imu"               type="bool" value="$(arg enable_imu)"/>
+
     <param name="base_frame_id"            type="str" value="$(arg base_frame_id)"/>
+    <param name="camera_color_frame"       type="str" value="$(arg base_frame_id)_color_frame"/>
+    <param name="camera_infra1_frame"      type="str" value="$(arg base_frame_id)_infra1_frame"/>
+    <param name="camera_infra2_frame"      type="str" value="$(arg base_frame_id)_infra2_frame"/>
+    <param name="camera_depth_frame"       type="str" value="$(arg base_frame_id)_depth_frame"/>
    
     <param name="depth_optical_frame_id"   type="str"  value="$(arg base_frame_id)_depth_optical_frame"/>
     <param name="infra1_optical_frame_id"  type="str"  value="$(arg base_frame_id)_infra1_optical_frame"/>
