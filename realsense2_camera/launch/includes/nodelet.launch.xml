@@ -38,6 +38,7 @@
   <arg name="gyro_fps"            default="1000"/>
   <arg name="accel_fps"           default="1000"/>
   <arg name="enable_imu"          default="true"/>
+  <arg name="base_frame_id"       default="silly"/>
 
   <arg name="enable_pointcloud"   default="false"/>
   <arg name="enable_sync"         default="false"/>
@@ -80,7 +81,8 @@
     <param name="gyro_fps"                 type="int"  value="$(arg gyro_fps)"/>
     <param name="accel_fps"                type="int"  value="$(arg accel_fps)"/>
     <param name="enable_imu"               type="bool" value="$(arg enable_imu)"/>
-
+    <param name="base_frame_id"            type="str" value="$(arg base_frame_id)"/>
+   
     <param name="depth_optical_frame_id"   type="str"  value="camera_depth_optical_frame"/>
     <param name="infra1_optical_frame_id"  type="str"  value="camera_infra1_optical_frame"/>
     <param name="infra2_optical_frame_id"  type="str"  value="camera_infra2_optical_frame"/>
