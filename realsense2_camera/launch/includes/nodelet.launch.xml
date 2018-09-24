@@ -38,7 +38,7 @@
   <arg name="gyro_fps"            default="1000"/>
   <arg name="accel_fps"           default="1000"/>
   <arg name="enable_imu"          default="true"/>
-  <arg name="base_frame_id"       default="silly"/>
+  <arg name="base_frame_id"       default="camera_link"/>
 
   <arg name="enable_pointcloud"   default="false"/>
   <arg name="enable_sync"         default="false"/>
