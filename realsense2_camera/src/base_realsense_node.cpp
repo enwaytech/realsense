@@ -95,9 +95,9 @@ BaseRealSenseNode::BaseRealSenseNode(ros::NodeHandle& nodeHandle,
     _depth_aligned_encoding[RS2_STREAM_DEPTH] = sensor_msgs::image_encodings::TYPE_16UC1;
 
     // Infrared stream
-    _image_format[RS2_STREAM_INFRARED] = CV_8UC1;    // CVBridge type
-    _encoding[RS2_STREAM_INFRARED] = sensor_msgs::image_encodings::MONO8; // ROS message type
-    _unit_step_size[RS2_STREAM_INFRARED] = sizeof(uint8_t); // sensor_msgs::ImagePtr row step size
+    _image_format[RS2_STREAM_INFRARED] = CV_16UC1;    // CVBridge type
+    _encoding[RS2_STREAM_INFRARED] = sensor_msgs::image_encodings::TYPE_16UC1; // ROS message type
+    _unit_step_size[RS2_STREAM_INFRARED] = sizeof(uint16_t); // sensor_msgs::ImagePtr row step size
     _stream_name[RS2_STREAM_INFRARED] = "infra";
     _depth_aligned_encoding[RS2_STREAM_INFRARED] = sensor_msgs::image_encodings::TYPE_16UC1;
 
@@ -802,6 +802,11 @@ void BaseRealSenseNode::enable_devices()
                     _width[elem] = video_profile.width();
                     _height[elem] = video_profile.height();
                     _fps[elem] = video_profile.fps();
+
+                    if (video_profile.format() == rs2_format::RS2_FORMAT_Y16)
+                    {
+                      ROS_INFO_STREAM("Format " << video_profile.format() << " detected which has no intrinsics");
+                    }
 
                     _enabled_profiles[elem].push_back(profile);
 
@@ -1609,7 +1614,30 @@ void BaseRealSenseNode::setupStreams()
 void BaseRealSenseNode::updateStreamCalibData(const rs2::video_stream_profile& video_profile)
 {
     stream_index_pair stream_index{video_profile.stream_type(), video_profile.stream_index()};
-    auto intrinsic = video_profile.get_intrinsics();
+
+    rs2_intrinsics intrinsic;
+
+    if (video_profile.format() != rs2_format::RS2_FORMAT_Y16)
+    {
+      intrinsic = video_profile.get_intrinsics();
+    }
+    else
+    {
+      intrinsic.width = video_profile.width();
+      intrinsic.height = video_profile.height();
+
+      intrinsic.ppx = intrinsic.width / 2.0F;
+      intrinsic.ppy = intrinsic.height / 2.0F;
+
+      intrinsic.fx = intrinsic.width / 2.0F;
+      intrinsic.fy = intrinsic.width / 2.0F;
+
+      for (int i = 0; i < 5; i++)
+      {
+          intrinsic.coeffs[i] = 0.0F;
+      }
+    }
+
     _stream_intrinsics[stream_index] = intrinsic;
     _camera_info[stream_index].width = intrinsic.width;
     _camera_info[stream_index].height = intrinsic.height;
