@@ -60,7 +60,7 @@ namespace realsense2_camera
 
 	class PipelineSyncer : public rs2::asynchronous_syncer
 	{
-	public: 
+	public:
 		void operator()(rs2::frame f) const
 		{
 			invoke(std::move(f));
@@ -78,7 +78,7 @@ namespace realsense2_camera
             void Publish(sensor_msgs::Imu msg);     //either send or hold message.
             uint32_t getNumSubscribers() { return _publisher.getNumSubscribers();};
             void Enable(bool is_enabled) {_is_enabled=is_enabled;};
-        
+
         private:
             void PublishPendingMessages();
 
@@ -169,7 +169,7 @@ namespace realsense2_camera
                         BaseRealSenseNode::float3 m_reading;
                         double                    m_time;
                 };
-                
+
             private:
                 size_t m_max_size;
                 std::map<sensor_name, std::list<imuData> > m_map;

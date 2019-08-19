@@ -91,7 +91,7 @@ void RealSenseNodeFactory::getDevice(rs2::device_list list)
 			ROS_INFO("Resetting device...");
 			_device.hardware_reset();
 			_device = rs2::device();
-			
+
 		}
 		catch(const std::exception& ex)
 		{
